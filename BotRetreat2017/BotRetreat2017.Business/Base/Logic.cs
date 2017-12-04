@@ -9,6 +9,7 @@ namespace BotRetreat2017.Business.Base
         protected Logic(TContext dbContext)
         {
             _dbContext = dbContext;
+            _dbContext.InitializeDatabase();
         }
     }
 }

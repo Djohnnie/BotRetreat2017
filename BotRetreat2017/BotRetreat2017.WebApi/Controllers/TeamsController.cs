@@ -32,7 +32,7 @@ namespace BotRetreat2017.WebApi.Controllers
         [HttpPut, Route("teams/{teamId}")]
         public Task<IActionResult> EditTeam(Guid teamId, String password, [FromBody]TeamRegistrationDto team)
         {
-            return Ok(l => l.EditTeam(teamId, team));
+            return Ok(l => l.EditTeam(teamId, password, team));
         }
 
         [HttpDelete, Route("teams/{teamId}")]

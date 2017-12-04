@@ -17,28 +17,38 @@ namespace BotRetreat2017.DataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server=tcp:my.djohnnie.be,1433;Initial Catalog=botretreat2017;Persist Security Info=False;User ID=botretreat;Password=BotRetreat2017$;MultipleActiveResultSets=False;TrustServerCertificate=False;Connection Timeout=30;");
+                //@"Server=tcp:my.djohnnie.be,1433;Initial Catalog=botretreat2017;Persist Security Info=False;User ID=botretreat;Password=BotRetreat2017$;MultipleActiveResultSets=False;TrustServerCertificate=False;Connection Timeout=30;");
+                @"Server=.\SQLDEV;Database=BotRetreat2017;Trusted_Connection=True;");
         }
 
-        public async Task InitializeDatabase()
+        public void InitializeDatabase()
         {
-            await Database.EnsureCreatedAsync();
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Team>().ToTable("TEAMS");
             modelBuilder.Entity<Team>().HasKey(x => x.Id).ForSqlServerIsClustered(clustered: false);
             modelBuilder.Entity<Team>().HasIndex(x => x.SysId).IsUnique().ForSqlServerIsClustered();
             modelBuilder.Entity<Team>().Property(x => x.SysId).ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<Arena>().ToTable("ARENAS");
             modelBuilder.Entity<Arena>().HasKey(x => x.Id).ForSqlServerIsClustered(clustered: false);
             modelBuilder.Entity<Arena>().HasIndex(x => x.SysId).IsUnique().ForSqlServerIsClustered();
             modelBuilder.Entity<Arena>().Property(x => x.SysId).ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<Bot>().ToTable("BOTS");
             modelBuilder.Entity<Bot>().HasKey(x => x.Id).ForSqlServerIsClustered(clustered: false);
             modelBuilder.Entity<Bot>().HasIndex(x => x.SysId).IsUnique().ForSqlServerIsClustered();
             modelBuilder.Entity<Bot>().Property(x => x.SysId).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Bot>().OwnsOne(x => x.PhysicalHealth);
+            modelBuilder.Entity<Bot>().OwnsOne(x => x.Stamina);
+            modelBuilder.Entity<Bot>().OwnsOne(x => x.Location);
+            modelBuilder.Entity<Bot>().OwnsOne(x => x.LastAttackLocation);
+            modelBuilder.Entity<Bot>().OwnsOne(x => x.Statistics);
 
+            modelBuilder.Entity<Deployment>().ToTable("DEPLOYMENTS");
             modelBuilder.Entity<Deployment>().HasKey(x => x.Id).ForSqlServerIsClustered(clustered: false);
             modelBuilder.Entity<Deployment>().HasIndex(x => x.SysId).IsUnique().ForSqlServerIsClustered();
             modelBuilder.Entity<Deployment>().Property(x => x.SysId).ValueGeneratedOnAdd();

@@ -13,7 +13,7 @@ namespace BotRetreat2017.Business.Interfaces
 
         Task<TeamDto> CreateTeam(TeamRegistrationDto team);
 
-        Task<TeamDto> EditTeam(Guid teamId, TeamRegistrationDto team);
+        Task<TeamDto> EditTeam(Guid teamId, String password, TeamRegistrationDto team);
 
         Task RemoveTeam(Guid teamId, String password);
     }

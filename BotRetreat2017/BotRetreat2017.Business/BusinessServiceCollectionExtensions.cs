@@ -1,5 +1,6 @@
 ﻿using BotRetreat2017.Business.Interfaces;
 using BotRetreat2017.DataAccess;
+using BotRetreat2017.Mappers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BotRetreat2017.Business
@@ -9,6 +10,7 @@ namespace BotRetreat2017.Business
         public static void AddBotRetreatBusiness(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<ITeamsLogic, TeamsLogic>();
+            serviceCollection.AddBotRetreatMappers();
             serviceCollection.AddBotRetreatDataAccess();
         }
     }

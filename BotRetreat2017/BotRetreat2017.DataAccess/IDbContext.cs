@@ -10,6 +10,6 @@ namespace BotRetreat2017.DataAccess
 
         Task<Int32> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        Task InitializeDatabase();
+        void InitializeDatabase();
     }
 }
