@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BotRetreat2017.DataTransferObjects
+namespace BotRetreat2017.Contracts
 {
     public class ScriptValidationMessageDto
     {

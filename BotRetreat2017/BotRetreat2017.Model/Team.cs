@@ -16,6 +16,8 @@ namespace BotRetreat2017.Model
 
         public Boolean Predator { get; set; }
 
+        public virtual Arena PersonalArena { get; set; }
+
         public virtual ICollection<Deployment> Deployments { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BotRetreat2017.DataTransferObjects;
+using BotRetreat2017.Contracts;
 using BotRetreat2017.Model;
 
 namespace BotRetreat2017.Mappers

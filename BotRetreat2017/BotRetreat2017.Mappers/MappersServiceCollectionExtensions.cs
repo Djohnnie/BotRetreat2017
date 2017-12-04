@@ -1,4 +1,4 @@
-﻿using BotRetreat2017.DataTransferObjects;
+﻿using BotRetreat2017.Contracts;
 using BotRetreat2017.Mappers.Interfaces;
 using BotRetreat2017.Model;
 using Microsoft.Extensions.DependencyInjection;

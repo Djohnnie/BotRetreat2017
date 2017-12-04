@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BotRetreat2017.DataTransferObjects
+namespace BotRetreat2017.Contracts
 {
     public class ScriptValidationDto
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using BotRetreat2017.DataTransferObjects.Interfaces;
+using BotRetreat2017.Contracts.Interfaces;
 
-namespace BotRetreat2017.DataTransferObjects
+namespace BotRetreat2017.Contracts
 {
     public class TeamDto : IDataTransferObject
     {

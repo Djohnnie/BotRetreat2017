@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BotRetreat2017.DataTransferObjects.Interfaces;
+using BotRetreat2017.Contracts.Interfaces;
 using BotRetreat2017.Mappers.Interfaces;
 using BotRetreat2017.Model.Interfaces;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BotRetreat2017.Business.Interfaces;
-using BotRetreat2017.DataTransferObjects;
+using BotRetreat2017.Contracts;
 using BotRetreat2017.WebApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
 

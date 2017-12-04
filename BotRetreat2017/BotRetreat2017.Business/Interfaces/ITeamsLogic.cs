@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BotRetreat2017.DataTransferObjects;
+using BotRetreat2017.Contracts;
 
 namespace BotRetreat2017.Business.Interfaces
 {

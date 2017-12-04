@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BotRetreat2017.DataTransferObjects.Interfaces;
+using BotRetreat2017.Contracts.Interfaces;
 using BotRetreat2017.Model.Interfaces;
 
 namespace BotRetreat2017.Mappers.Interfaces

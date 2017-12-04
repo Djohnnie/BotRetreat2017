@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
-using BotRetreat2017.DataTransferObjects;
+using BotRetreat2017.Contracts;
 using BotRetreat2017.Model;
 using BotRetreat2017.Scripting.Interfaces;
 using BotRetreat2017.Utilities;
@@ -13,9 +13,9 @@ using Microsoft.CodeAnalysis.Scripting;
 
 namespace BotRetreat2017.Scripting
 {
-    public class BotScript
+    public static class BotScript
     {
-        public Task<Script<Object>> PrepareScript(String script)
+        public static Task<Script<Object>> PrepareScript(String script)
         {
             return Task.Run(() =>
             {
@@ -32,7 +32,7 @@ namespace BotRetreat2017.Scripting
             });
         }
 
-        public async Task<ScriptValidationDto> ValidateScript(String script)
+        public static async Task<ScriptValidationDto> ValidateScript(String script)
         {
             var scriptValidation = new ScriptValidationDto { Script = script, Messages = new List<ScriptValidationMessageDto>() };
 

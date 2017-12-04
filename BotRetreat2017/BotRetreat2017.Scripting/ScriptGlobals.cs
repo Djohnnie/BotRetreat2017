@@ -28,7 +28,7 @@ namespace BotRetreat2017.Scripting
         private Int32 _mentalDamageDone_fd832498b5c4470bb4ac626ee3b3952d;
         private Int32 _kills_fd832498b5c4470bb4ac626ee3b3952d;
 
-        private Dictionary<String, String> _memory;
+        private Dictionary<String, String> _memory_0534fba27330469a120b08d53b05b963;
 
         #endregion
 
@@ -72,7 +72,7 @@ namespace BotRetreat2017.Scripting
         public LastAction LastAction => _lastAction_8c1900d139b84019984c850387e441d6;
         public LastAction CurrentAction => _currentAction_fd832498b5c4470bb4ac626ee3b3952d;
         public IFieldOfView Vision { get; }
-        public Dictionary<String, String> Memory => _memory;
+        public Dictionary<String, String> Memory => _memory_0534fba27330469a120b08d53b05b963;
         public Position LastAttackLocation => _lastAttackLocation;
         public Guid? LastAttackBotId => _lastAttackBotId;
         public Int32 PhysicalDamageDone => _physicalDamageDone_fd832498b5c4470bb4ac626ee3b3952d;
@@ -86,7 +86,7 @@ namespace BotRetreat2017.Scripting
         public ScriptGlobals(Arena arena, Bot bot, List<Bot> bots)
         {
             _bot_e55472035b434b1ea185cf32ece2b8bc = bot;
-            _bots_6f4e9d2c3f474f2fa08d833e05cbba60 = bots;
+            _bots_6f4e9d2c3f474f2fa08d833e05cbba60 = bots ?? new List<Bot>();
             Width = arena.Width;
             Height = arena.Height;
             Location = bot.Location;
@@ -101,7 +101,7 @@ namespace BotRetreat2017.Scripting
             _currentAction_fd832498b5c4470bb4ac626ee3b3952d = LastAction.Idling;
             _lastAttackLocation = new Position { X = -1, Y = -1 };
             Vision = new FieldOfView(arena, bot, bots);
-            _memory = bot.Memory.Deserialize<Dictionary<String, String>>() ?? new Dictionary<String, String>();
+            _memory_0534fba27330469a120b08d53b05b963 = bot.Memory.Deserialize<Dictionary<String, String>>() ?? new Dictionary<String, String>();
             ////_logLogic_a76ef698d9204527836e30719d971888 = logLogic;
         }
 
@@ -232,30 +232,30 @@ namespace BotRetreat2017.Scripting
 
         public void StoreInMemory<T>(String key, T value)
         {
-            if (_memory.ContainsKey(key))
+            if (_memory_0534fba27330469a120b08d53b05b963.ContainsKey(key))
             {
-                _memory[key] = value.Serialize();
+                _memory_0534fba27330469a120b08d53b05b963[key] = value.Serialize();
             }
             else
             {
-                _memory.Add(key, value.Serialize());
+                _memory_0534fba27330469a120b08d53b05b963.Add(key, value.Serialize());
             }
         }
 
         public T LoadFromMemory<T>(String key)
         {
-            if (_memory.ContainsKey(key))
+            if (_memory_0534fba27330469a120b08d53b05b963.ContainsKey(key))
             {
-                return _memory[key].Deserialize<T>();
+                return _memory_0534fba27330469a120b08d53b05b963[key].Deserialize<T>();
             }
             return default(T);
         }
 
         public void RemoveFromMemory(String key)
         {
-            if (_memory.ContainsKey(key))
+            if (_memory_0534fba27330469a120b08d53b05b963.ContainsKey(key))
             {
-                _memory.Remove(key);
+                _memory_0534fba27330469a120b08d53b05b963.Remove(key);
             }
         }
 

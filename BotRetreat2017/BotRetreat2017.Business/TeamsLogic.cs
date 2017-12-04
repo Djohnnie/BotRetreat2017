@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using BotRetreat2017.Business.Base;
 using BotRetreat2017.Business.Exceptions;
 using BotRetreat2017.Business.Interfaces;
+using BotRetreat2017.Contracts;
 using BotRetreat2017.DataAccess;
-using BotRetreat2017.DataTransferObjects;
 using BotRetreat2017.Mappers.Interfaces;
 using BotRetreat2017.Model;
 using Microsoft.EntityFrameworkCore;
@@ -40,8 +40,30 @@ namespace BotRetreat2017.Business
 
         public async Task<TeamDto> CreateTeam(TeamRegistrationDto team)
         {
+            Team existingTeam = await _dbContext.Teams.SingleOrDefaultAsync(x => x.Name.ToUpper() == team.Name.ToUpper());
+            if (existingTeam != null)
+            {
+                throw new BusinessException($"A team with name '{team}' already exists.");
+            }
+            Arena existingArena = await _dbContext.Arenas.SingleOrDefaultAsync(x => x.Name.ToUpper() == team.Name.ToUpper());
+            if (existingArena != null)
+            {
+                throw new BusinessException($"An arena with name '{team}' already exists.");
+            }
+
             Team teamToCreate = _teamRegistrationMapper.Map(team);
             teamToCreate.Password = Crypt.HashPassword(team.Password, 10, enhancedEntropy: true);
+            teamToCreate.PersonalArena = new Arena
+            {
+                Active = true,
+                DeploymentRestriction = TimeSpan.Zero,
+                MaximumPoints = 1000,
+                Width = 10,
+                Height = 10,
+                Name = team.Name,
+                LastRefreshDateTime = DateTime.UtcNow,
+                Private = true
+            };
             await _dbContext.Teams.AddAsync(teamToCreate);
             await _dbContext.SaveChangesAsync();
             return _teamMapper.Map(teamToCreate);
