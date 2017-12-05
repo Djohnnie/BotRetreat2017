@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BotRetreat2017.Client.Routes
+namespace BotRetreat2017.Routes
 {
     public static class RouteConstants
     {

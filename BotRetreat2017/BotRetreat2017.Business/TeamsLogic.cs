@@ -43,12 +43,12 @@ namespace BotRetreat2017.Business
             Team existingTeam = await _dbContext.Teams.SingleOrDefaultAsync(x => x.Name.ToUpper() == team.Name.ToUpper());
             if (existingTeam != null)
             {
-                throw new BusinessException($"A team with name '{team}' already exists.");
+                throw new BusinessException($"A team with name '{team.Name}' already exists.");
             }
             Arena existingArena = await _dbContext.Arenas.SingleOrDefaultAsync(x => x.Name.ToUpper() == team.Name.ToUpper());
             if (existingArena != null)
             {
-                throw new BusinessException($"An arena with name '{team}' already exists.");
+                throw new BusinessException($"An arena with name '{team.Name}' already exists.");
             }
 
             Team teamToCreate = _teamRegistrationMapper.Map(team);

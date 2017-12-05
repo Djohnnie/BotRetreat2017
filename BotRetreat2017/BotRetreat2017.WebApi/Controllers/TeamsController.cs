@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BotRetreat2017.WebApi.Controllers
 {
+    [Route("api")]
     public class TeamsController : ApiController<ITeamsLogic>
     {
         public TeamsController(ITeamsLogic teamsLogic) : base(teamsLogic) { }
@@ -17,7 +18,7 @@ namespace BotRetreat2017.WebApi.Controllers
             return Ok(l => l.GetAllTeams());
         }
 
-        [HttpGet, Route("teams")]
+        [HttpGet, Route("teams/{name}/{password}")]
         public Task<IActionResult> GetTeam(String name, String password)
         {
             return Ok(l => l.GetTeam(name, password));

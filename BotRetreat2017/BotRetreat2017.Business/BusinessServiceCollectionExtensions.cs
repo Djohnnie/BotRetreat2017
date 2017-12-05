@@ -9,6 +9,7 @@ namespace BotRetreat2017.Business
     {
         public static void AddBotRetreatBusiness(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddTransient<IArenaLogic, ArenaLogic>();
             serviceCollection.AddTransient<ITeamsLogic, TeamsLogic>();
             serviceCollection.AddBotRetreatMappers();
             serviceCollection.AddBotRetreatDataAccess();

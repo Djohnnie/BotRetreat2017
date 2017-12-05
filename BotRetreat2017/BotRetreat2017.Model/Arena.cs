@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using BotRetreat2017.Model.Interfaces;
 
 namespace BotRetreat2017.Model
 {
-    public class Arena
+    public class Arena : IEntity
     {
         public Guid Id { get; set; }
 

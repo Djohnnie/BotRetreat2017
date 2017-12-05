@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BotRetreat2017.Contracts\BotRetreat2017.Contracts.csproj" />
+    <ProjectReference Include="..\BotRetreat2017.Routes\BotRetreat2017.Routes.csproj" />
     <ProjectReference Include="..\BotRetreat2017.Utilities\BotRetreat2017.Utilities.csproj" />
   </ItemGroup>
 

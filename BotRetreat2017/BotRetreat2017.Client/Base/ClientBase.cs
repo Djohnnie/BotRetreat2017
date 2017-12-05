@@ -11,9 +11,8 @@ namespace BotRetreat2017.Client.Base
     public class ClientBase
     {
         protected String BaseUri { get; }
-
-        //public ClientBase(String baseUri = "http://localhost/BotRetreat.Web")
-        public ClientBase(String baseUri = "http://botretreat.cloudapp.net")
+        
+        public ClientBase(String baseUri = "http://localhost:58508")
         {
             BaseUri = baseUri;
         }
