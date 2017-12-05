@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BotRetreat2017.Wpf._.Dashboard.Properties
+namespace BotRetreat2017.Wpf.ScriptEditor.Properties
 {
 
 
