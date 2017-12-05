@@ -6,6 +6,6 @@ namespace BotRetreat2017.Client.Interfaces
 {
     public interface IScriptClient
     {
-        Task<ScriptValidationDto> ValidateScript(String script);
+        Task<ScriptValidationDto> ValidateScript(ScriptDto script);
     }
 }

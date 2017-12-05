@@ -9,6 +9,7 @@ using BotRetreat2017.Model;
 using BotRetreat2017.Contracts;
 using BotRetreat2017.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using Crypt = BCrypt.Net.BCrypt;
 
 namespace BotRetreat2017.Business
 {
@@ -42,8 +43,8 @@ namespace BotRetreat2017.Business
 
         public async Task<ArenaDto> GetTeamArena(String teamName, String teamPassword)
         {
-            var team = await _dbContext.Teams.SingleOrDefaultAsync(x => x.Name == teamName && x.Password == teamPassword);
-            if (team != null)
+            var team = await _dbContext.Teams.SingleOrDefaultAsync(x => x.Name == teamName);
+            if (team != null && Crypt.EnhancedVerify(teamPassword, team.Password))
             {
                 return _arenaMapper.Map(
                     await _dbContext.Arenas.SingleOrDefaultAsync(x => x.Name == teamName));
@@ -53,8 +54,8 @@ namespace BotRetreat2017.Business
 
         public async Task<List<ArenaDto>> GetTeamArenas(String teamName, String teamPassword)
         {
-            var team = await _dbContext.Teams.SingleOrDefaultAsync(x => x.Name == teamName && x.Password == teamPassword);
-            if (team != null)
+            var team = await _dbContext.Teams.SingleOrDefaultAsync(x => x.Name == teamName);
+            if (team != null && Crypt.EnhancedVerify(teamPassword, team.Password))
             {
                 var arenas = _arenaMapper.Map(
                     await _dbContext.Arenas.Where(x => x.Active && (!x.Private || x.Name == teamName)).ToListAsync());

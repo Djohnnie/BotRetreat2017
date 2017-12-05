@@ -19,6 +19,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
         private readonly ITeamClient _teamClient;
         private readonly IStatisticsClient _statisticsClient;
         private readonly IEventAggregator _eventAggregator;
+        private readonly ICacheService _cacheService;
 
         private TeamDto _currentTeam;
         private String _teamName;
@@ -76,12 +77,13 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
 
         #region [ Construction ]
 
-        public TeamStatisticsViewModel(ITeamClient teamClient, IStatisticsClient statisticsClient, ITimerService timerService, IEventAggregator eventAggregator)
+        public TeamStatisticsViewModel(ITeamClient teamClient, IStatisticsClient statisticsClient, ITimerService timerService, IEventAggregator eventAggregator, ICacheService cacheService)
         {
             _teamClient = teamClient;
             _statisticsClient = statisticsClient;
             timerService.Start(TimeSpan.FromSeconds(1), OnRefresh);
             _eventAggregator = eventAggregator;
+            _cacheService = cacheService;
 
             Func<Boolean> canExecute = () =>
             {
@@ -105,6 +107,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
                 await ExceptionHandling(async () =>
                 {
                     var password = new NetworkCredential(string.Empty, TeamPassword).Password;
+                    _cacheService.Store("PSWD", password);
                     CurrentTeam = await _teamClient.GetTeam(TeamName, password);
                 });
             }
@@ -117,6 +120,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
                 await ExceptionHandling(async () =>
                 {
                     var password = new NetworkCredential(string.Empty, TeamPassword).Password;
+                    _cacheService.Store("PSWD", password);
                     var team = new TeamRegistrationDto { Name = TeamName, Password = password };
                     CurrentTeam = await _teamClient.CreateTeam(team);
                 });
@@ -129,7 +133,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
             {
                 await IgnoreExceptions(async () =>
                 {
-                    var teamStatistics = await _statisticsClient.GetTeamStatistics(CurrentTeam.Name, "");
+                    var teamStatistics = await _statisticsClient.GetTeamStatistics(CurrentTeam.Name, _cacheService.Load<String>("PSWD"));
                     TeamStatistics.Clear();
                     teamStatistics.ForEach(ts => TeamStatistics.Add(ts));
                 });

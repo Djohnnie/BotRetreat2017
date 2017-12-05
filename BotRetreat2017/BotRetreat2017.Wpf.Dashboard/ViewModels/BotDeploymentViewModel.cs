@@ -32,6 +32,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IFileExplorerService _fileExplorerService;
         private readonly IFileService _fileService;
+        private readonly ICacheService _cacheService;
 
         private Boolean _scriptValid;
         private TeamDto _currentTeam;
@@ -190,7 +191,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
 
         #region [ Construction ]
 
-        public BotDeploymentViewModel(IArenaClient arenaClient, IBotClient botClient, IDeploymentClient deploymentClient, IScriptClient scriptClient, IEventAggregator eventAggregator, IFileExplorerService fileExplorerService, IFileService fileService, ITimerService timerService)
+        public BotDeploymentViewModel(IArenaClient arenaClient, IBotClient botClient, IDeploymentClient deploymentClient, IScriptClient scriptClient, IEventAggregator eventAggregator, IFileExplorerService fileExplorerService, IFileService fileService, ITimerService timerService, ICacheService cacheService)
         {
             _arenaClient = arenaClient;
             _botClient = botClient;
@@ -199,6 +200,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
             _eventAggregator = eventAggregator;
             _fileExplorerService = fileExplorerService;
             _fileService = fileService;
+            _cacheService = cacheService;
 
             timerService.Start(TimeSpan.FromSeconds(5), RefreshArenas);
 
@@ -237,7 +239,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
         {
             await BusyAndExceptionHandling(async () =>
             {
-                ScriptValidation = await _scriptClient.ValidateScript(BotScript.Base64Encode());
+                ScriptValidation = await _scriptClient.ValidateScript(new ScriptDto { Script = BotScript.Base64Encode() });
                 ScriptValid = ScriptValidation.Messages.Count == 0;
             });
         }
@@ -268,12 +270,12 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
                         });
                         if (deployment != null)
                         {
-                            //BotName = "";
-                            //BotScript = "";
-                            //BotPhysicalHealth = 32000;
-                            //BotMentalHealth = 32000;
-                            //BotStamina = 32000;
-                        }
+                    //BotName = "";
+                    //BotScript = "";
+                    //BotPhysicalHealth = 32000;
+                    //BotMentalHealth = 32000;
+                    //BotStamina = 32000;
+                }
                     }
                     RefreshArenas();
                 }
@@ -313,7 +315,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
 
         private async Task<List<ArenaDto>> GetTeamArenas()
         {
-            return await _arenaClient.GetTeamArenas(CurrentTeam.Name, "");
+            return await _arenaClient.GetTeamArenas(CurrentTeam.Name, _cacheService.Load<String>("PSWD"));
         }
 
         private void SelectedScriptValidationMessageChanged()

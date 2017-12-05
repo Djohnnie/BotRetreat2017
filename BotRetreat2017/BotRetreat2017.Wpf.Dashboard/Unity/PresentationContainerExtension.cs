@@ -18,6 +18,7 @@ namespace BotRetreat2017.Wpf.Dashboard.Unity
             Container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IFileExplorerService, FileExplorerService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IFileService, FileService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ICacheService, CacheService>(new SingletonLifetimeManager());
             Container.RegisterType<MainViewModel>();
             Container.RegisterType<TeamStatisticsViewModel>();
             Container.RegisterType<BotStatisticsViewModel>();

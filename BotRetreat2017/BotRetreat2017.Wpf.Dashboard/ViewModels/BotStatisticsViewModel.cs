@@ -17,6 +17,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
 
         private readonly IArenaClient _arenaClient;
         private readonly IStatisticsClient _statisticsClient;
+        private readonly ICacheService _cacheService;
 
         private TeamDto _currentTeam;
         private List<ArenaDto> _availableArenas;
@@ -67,10 +68,11 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
 
         #region [ Construction ]
 
-        public BotStatisticsViewModel(IArenaClient arenaClient, IStatisticsClient statisticsClient, ITimerService timerService, IEventAggregator eventAggregator)
+        public BotStatisticsViewModel(IArenaClient arenaClient, IStatisticsClient statisticsClient, ITimerService timerService, IEventAggregator eventAggregator, ICacheService cacheService)
         {
             _arenaClient = arenaClient;
             _statisticsClient = statisticsClient;
+            _cacheService = cacheService;
 
             InitializeTimer(timerService);
             SubscribeEvents(eventAggregator);
@@ -86,7 +88,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
             {
                 await IgnoreExceptions(async () =>
                 {
-                    var botStatistics = await _statisticsClient.GetBotStatistics(CurrentTeam.Name, "", SelectedArena.Name);
+                    var botStatistics = await _statisticsClient.GetBotStatistics(CurrentTeam.Name, _cacheService.Load<String>("PSWD"), SelectedArena.Name);
                     BotStatistics.Clear();
                     botStatistics.OrderBy(x => x.PhysicalHealth.Current == 0).ThenBy(x => x.BotName).ToList().ForEach(bs => BotStatistics.Add(bs));
                 });
@@ -109,7 +111,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
 
         private async void FetchAvailableArenas()
         {
-            AvailableArenas = await _arenaClient.GetTeamArenas(CurrentTeam.Name, "");
+            AvailableArenas = await _arenaClient.GetTeamArenas(CurrentTeam.Name, _cacheService.Load<String>("PSWD"));
             SelectedArena = AvailableArenas.SingleOrDefault(x => x.Name == CurrentTeam.Name);
         }
 

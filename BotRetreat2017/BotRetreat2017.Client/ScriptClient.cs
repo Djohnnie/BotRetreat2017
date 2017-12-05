@@ -9,12 +9,11 @@ namespace BotRetreat2017.Client
 {
     public class ScriptClient : ClientBase, IScriptClient
     {
-        //public ScriptClient() : base("http://localhost/BotRetreat.Web.ScriptValidation") { }
-        public ScriptClient() : base("http://botretreat.cloudapp.net:8080") { }
+        public ScriptClient() : base("http://localhost:62746") { }
 
-        public Task<ScriptValidationDto> ValidateScript(String script)
+        public Task<ScriptValidationDto> ValidateScript(ScriptDto script)
         {
-            return Post<ScriptValidationDto, String>(
+            return Post<ScriptValidationDto, ScriptDto>(
                $"{BaseUri}/{RouteConstants.PREFIX}/{RouteConstants.POST_SCRIPT_VALIDATION}", script);
         }
     }

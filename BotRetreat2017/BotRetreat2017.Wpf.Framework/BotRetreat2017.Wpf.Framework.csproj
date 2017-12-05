@@ -98,10 +98,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="Services\CacheService.cs" />
     <Compile Include="Services\Design\DesignTimerService.cs" />
     <Compile Include="Services\Design\DesignTimerToken.cs" />
     <Compile Include="Services\FileExplorerService.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\Interfaces\ICacheService.cs" />
     <Compile Include="Services\Interfaces\IFileExplorerService.cs" />
     <Compile Include="Services\Interfaces\IFileService.cs" />
     <Compile Include="Services\Interfaces\ITimerService.cs" />
@@ -130,6 +132,10 @@
     <ProjectReference Include="..\BotRetreat2017.Contracts\BotRetreat2017.Contracts.csproj">
       <Project>{2922bacf-52a6-4b36-bd12-70461d9d827b}</Project>
       <Name>BotRetreat2017.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BotRetreat2017.Utilities\BotRetreat2017.Utilities.csproj">
+      <Project>{45995979-cd34-439f-bb60-d436747fa301}</Project>
+      <Name>BotRetreat2017.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

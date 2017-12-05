@@ -33,9 +33,14 @@ namespace BotRetreat2017.Business
             return _teamMapper.Map(teams);
         }
 
-        public Task<TeamDto> GetTeam(String name, String password)
+        public async Task<TeamDto> GetTeam(String name, String password)
         {
-            throw new NotImplementedException();
+            var team = await _dbContext.Teams.SingleOrDefaultAsync(x => x.Name == name);
+            if (team != null && Crypt.EnhancedVerify(password, team.Password))
+            {
+                return _teamMapper.Map(team);
+            }
+            return null;
         }
 
         public async Task<TeamDto> CreateTeam(TeamRegistrationDto team)
