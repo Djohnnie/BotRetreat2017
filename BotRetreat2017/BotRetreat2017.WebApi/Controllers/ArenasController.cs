@@ -44,13 +44,13 @@ namespace BotRetreat2017.WebApi.Controllers
         }
 
         [HttpPost, Route(RouteConstants.POST_ARENA)]
-        public Task<IActionResult> Post(ArenaDto arena)
+        public Task<IActionResult> Post([FromBody]ArenaDto arena)
         {
             return Ok(l => l.CreateArena(arena));
         }
 
         [HttpPut, Route(RouteConstants.PUT_ARENA)]
-        public Task<IActionResult> Put(ArenaDto arena)
+        public Task<IActionResult> Put([FromBody]ArenaDto arena)
         {
             return Ok(l => l.EditArena(arena));
         }

@@ -7,6 +7,7 @@ namespace BotRetreat2017.DataAccess
         public static void AddBotRetreatDataAccess(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IBotRetreatDbContext, BotRetreatDbContext>();
+            serviceCollection.AddScoped<IBotRetreatHistoryDbContext, BotRetreatHistoryDbContext>();
         }
     }
 }

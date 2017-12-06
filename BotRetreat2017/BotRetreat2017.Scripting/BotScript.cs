@@ -120,7 +120,7 @@ namespace BotRetreat2017.Scripting
                     }
                 });
 
-                if (!task.Wait(TimeSpan.FromSeconds(2)))
+                if (!task.Wait(TimeSpan.FromSeconds(1)))
                 {
                     scriptValidation.Messages.Add(new ScriptValidationMessageDto
                     {

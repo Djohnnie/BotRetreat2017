@@ -35,9 +35,12 @@ namespace BotRetreat2017.Processing
                 foreach (Arena arena in arenas)
                 {
                     List<Bot> bots = await dbContext.Bots.Where(x =>
-                            !x.Statistics.TimeOfDeath.HasValue && x.Deployments.Any(d => d.Arena.Id == arena.Id)).ToListAsync();
+                            !x.Statistics.TimeOfDeath.HasValue && x.Deployments.Any(d => d.Arena.Id == arena.Id))
+                            .Include(x => x.Deployments).ThenInclude(x => x.Team).ToListAsync();
 
                     await Task.WhenAll(bots.Select(bot => GoBot(bot, arena, bots)));
+
+                    await dbContext.SaveChangesAsync();
                 }
             }
         }

@@ -81,7 +81,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
         {
             _teamClient = teamClient;
             _statisticsClient = statisticsClient;
-            timerService.Start(TimeSpan.FromSeconds(1), OnRefresh);
+            timerService.Start(TimeSpan.FromSeconds(10), OnRefresh);
             _eventAggregator = eventAggregator;
             _cacheService = cacheService;
 

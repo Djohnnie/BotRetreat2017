@@ -270,12 +270,12 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
                         });
                         if (deployment != null)
                         {
-                    //BotName = "";
-                    //BotScript = "";
-                    //BotPhysicalHealth = 32000;
-                    //BotMentalHealth = 32000;
-                    //BotStamina = 32000;
-                }
+                            //BotName = "";
+                            //BotScript = "";
+                            //BotPhysicalHealth = 32000;
+                            //BotMentalHealth = 32000;
+                            //BotStamina = 32000;
+                        }
                     }
                     RefreshArenas();
                 }

@@ -16,7 +16,8 @@ namespace BotRetreat2017.Scripting.Extensions
             bot.LastAction = coreGlobals.CurrentAction;
             bot.PhysicalHealth.Current = coreGlobals.PhysicalHealth;
             bot.Stamina.Current = coreGlobals.Stamina;
-            bot.LastAttackLocation = coreGlobals.LastAttackLocation;
+            bot.LastAttackLocation.X = coreGlobals.LastAttackLocation.X;
+            bot.LastAttackLocation.Y = coreGlobals.LastAttackLocation.Y;
             bot.LastAttackBotId = coreGlobals.LastAttackBotId;
             bot.Statistics.PhysicalDamageDone += coreGlobals.PhysicalDamageDone;
             bot.Statistics.Kills += coreGlobals.Kills;

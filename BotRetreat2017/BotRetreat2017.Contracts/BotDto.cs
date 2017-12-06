@@ -1,8 +1,9 @@
 ﻿using System;
+using BotRetreat2017.Contracts.Interfaces;
 
 namespace BotRetreat2017.Contracts
 {
-    public class BotDto
+    public class BotDto : IDataTransferObject
     {
         public Guid Id { get; set; }
 

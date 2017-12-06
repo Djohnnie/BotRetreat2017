@@ -101,7 +101,7 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
 
         private void InitializeTimer(ITimerService timerService)
         {
-            timerService.Start(TimeSpan.FromSeconds(1), OnRefresh);
+            timerService.Start(TimeSpan.FromSeconds(2), OnRefresh);
         }
 
         private void SubscribeEvents(IEventAggregator eventAggregator)

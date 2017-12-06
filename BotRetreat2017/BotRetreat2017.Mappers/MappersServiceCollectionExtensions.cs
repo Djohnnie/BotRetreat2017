@@ -13,6 +13,10 @@ namespace BotRetreat2017.Mappers
             serviceCollection.AddTransient<IMapper<Arena, ArenaListDto>, ArenaListMapper>();
             serviceCollection.AddTransient<IMapper<Team, TeamDto>, TeamMapper>();
             serviceCollection.AddTransient<IMapper<Team, TeamRegistrationDto>, TeamRegistrationMapper>();
+            serviceCollection.AddTransient<IMapper<Bot, BotDto>, BotMapper>();
+            serviceCollection.AddTransient<IMapper<Team, TeamStatisticDto>, TeamStatisticMapper>();
+            serviceCollection.AddTransient<IMapper<Bot, BotStatisticDto>, BotStatisticMapper>();
+            serviceCollection.AddTransient<IMapper<History, HistoryDto>, HistoryMapper>();
         }
     }
 }
