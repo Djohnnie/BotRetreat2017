@@ -9,7 +9,7 @@ namespace BotRetreat2017.Client
 {
     public class ScriptClient : ClientBase, IScriptClient
     {
-        public ScriptClient() : base("http://localhost:62746") { }
+        public ScriptClient() : base("http://scriptvalidation.azurewebsites.net") { }
 
         public Task<ScriptValidationDto> ValidateScript(ScriptDto script)
         {

@@ -27,10 +27,12 @@ namespace BotRetreat2017.Business
         public async Task<GameDto> GetGameForArena(String arenaName)
         {
             var arena = await _dbContext.Arenas.SingleOrDefaultAsync(x => x.Name == arenaName);
-            var bots = await _dbContext.Deployments.Where(x => x.Arena.Name == arenaName).Select(x => x.Bot)
+            if (arena == null) return new GameDto();
+            var bots = await _dbContext.Bots.Where(x => x.Deployments.Any(d => d.ArenaId == arena.Id))
+                .Where(x => !x.Statistics.TimeOfDeath.HasValue || (DateTime.UtcNow - x.Statistics.TimeOfDeath.Value).TotalMinutes < 2)
                 .Include(x => x.Statistics).Include(x => x.PhysicalHealth).Include(x => x.Stamina)
-                .Include(x => x.Location).Include(x => x.LastAttackLocation).Include(x => x.Deployments).ThenInclude(x => x.Team).ToListAsync();
-            bots = bots.Where(x => !x.Statistics.TimeOfDeath.HasValue || (DateTime.UtcNow - x.Statistics.TimeOfDeath.Value).TotalMinutes < 2).ToList();
+                .Include(x => x.Location).Include(x => x.LastAttackLocation)
+                .Include(x => x.Deployments).ThenInclude(x => x.Team).ToListAsync();
             //var history = await _dbContext.History.Where(x => x.Arena.Name == arenaName).OrderByDescending(x => x.DateTime).ToListAsync();
             bots.ForEach(x =>
             {

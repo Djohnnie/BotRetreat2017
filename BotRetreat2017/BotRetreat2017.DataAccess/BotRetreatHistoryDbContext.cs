@@ -10,8 +10,8 @@ namespace BotRetreat2017.DataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                //@"Server=tcp:my.djohnnie.be,1433;Initial Catalog=botretreat2017;Persist Security Info=False;User ID=botretreat;Password=BotRetreat2017$;MultipleActiveResultSets=False;TrustServerCertificate=False;Connection Timeout=30;");
-                @"Server=.\SQLDEV;Database=BotRetreat2017History;Trusted_Connection=True;");
+                @"Server=tcp:botretreat.database.windows.net,1433;Initial Catalog=botretreat;Persist Security Info=False;User ID=br2017;Password=B0tR3tr3at;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                //@"Server=.\SQLDEV;Database=BotRetreat2017History;Trusted_Connection=True;");
         }
 
         public void InitializeDatabase()
