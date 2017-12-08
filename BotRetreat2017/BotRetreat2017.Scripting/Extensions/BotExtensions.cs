@@ -10,20 +10,20 @@ namespace BotRetreat2017.Scripting.Extensions
     {
         public static void UpdateBot(this Bot bot, ScriptGlobals coreGlobals)
         {
-            bot.Location.X = coreGlobals.Location.X;
-            bot.Location.Y = coreGlobals.Location.Y;
+            bot.LocationX = coreGlobals.Location.X;
+            bot.LocationY = coreGlobals.Location.Y;
             bot.Orientation = coreGlobals.Orientation;
             bot.LastAction = coreGlobals.CurrentAction;
-            bot.PhysicalHealth.Current = coreGlobals.PhysicalHealth;
-            bot.Stamina.Current = coreGlobals.Stamina;
-            bot.LastAttackLocation.X = coreGlobals.LastAttackLocation.X;
-            bot.LastAttackLocation.Y = coreGlobals.LastAttackLocation.Y;
+            bot.CurrentPhysicalHealth = coreGlobals.PhysicalHealth;
+            bot.CurrentStamina = coreGlobals.Stamina;
+            bot.LastAttackLocationX = coreGlobals.LastAttackLocation.X;
+            bot.LastAttackLocationY = coreGlobals.LastAttackLocation.Y;
             bot.LastAttackBotId = coreGlobals.LastAttackBotId;
-            bot.Statistics.PhysicalDamageDone += coreGlobals.PhysicalDamageDone;
-            bot.Statistics.Kills += coreGlobals.Kills;
+            bot.PhysicalDamageDone += coreGlobals.PhysicalDamageDone;
+            bot.Kills += coreGlobals.Kills;
             if (bot.LastAction == LastAction.SelfDestruct)
             {
-                bot.Statistics.TimeOfDeath = DateTime.UtcNow;
+                bot.TimeOfDeath = DateTime.UtcNow;
             }
             bot.Memory = coreGlobals.Memory.Serialize();
         }
@@ -33,8 +33,8 @@ namespace BotRetreat2017.Scripting.Extensions
             return bots.Select(bot => new BotStat
             {
                 BotId = bot.Id,
-                PhysicalHealth = bot.PhysicalHealth.Current,
-                Stamina = bot.Stamina.Current
+                PhysicalHealth = bot.CurrentPhysicalHealth,
+                Stamina = bot.CurrentStamina
             }).ToList();
         }
 
@@ -43,8 +43,8 @@ namespace BotRetreat2017.Scripting.Extensions
             foreach (var bot in bots)
             {
                 var botStat = botStats.Single(s => s.BotId == bot.Id);
-                bot.PhysicalHealth.Drain = (Int16)(botStat.PhysicalHealth - bot.PhysicalHealth.Current);
-                bot.Stamina.Drain = (Int16)(botStat.Stamina - bot.Stamina.Current);
+                bot.PhysicalHealthDrain = (Int16)(botStat.PhysicalHealth - bot.CurrentPhysicalHealth);
+                bot.StaminaDrain = (Int16)(botStat.Stamina - bot.CurrentStamina);
             }
         }
 
@@ -57,8 +57,8 @@ namespace BotRetreat2017.Scripting.Extensions
                     var attackedBot = bots.SingleOrDefault(x => x.Id == bot.LastAttackBotId.Value);
                     if (attackedBot != null)
                     {
-                        bot.LastAttackLocation.X = attackedBot.Location.X;
-                        bot.LastAttackLocation.Y = attackedBot.Location.Y;
+                        bot.LastAttackLocationX = attackedBot.LocationX;
+                        bot.LastAttackLocationY = attackedBot.LocationY;
                     }
                 }
             };

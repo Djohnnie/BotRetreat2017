@@ -12,11 +12,11 @@
 
         MovingForward,
 
+        Teleport,
+
         MeleeAttack,
 
         RangedAttack,
-
-        Teleport,
 
         SelfDestruct,
 

@@ -29,17 +29,5 @@ namespace BotRetreat2017.WebApi.Controllers
         {
             return Ok(l => l.CreateTeam(team));
         }
-
-        [HttpPut, Route("teams/{teamId}")]
-        public Task<IActionResult> EditTeam(Guid teamId, String password, [FromBody]TeamRegistrationDto team)
-        {
-            return Ok(l => l.EditTeam(teamId, password, team));
-        }
-
-        [HttpDelete, Route("teams/{teamId}")]
-        public Task<IActionResult> RemoveTeam(Guid teamId, String password)
-        {
-            return Ok(l => l.RemoveTeam(teamId, password));
-        }
     }
 }

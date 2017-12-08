@@ -254,11 +254,15 @@ namespace BotRetreat2017.Wpf.Dashboard.ViewModels
                     {
                         Name = BotName,
                         Script = BotScript.Base64Encode(),
-                        Location = new PositionDto { X = 0, Y = 0 },
+                        LocationX = 0,
+                        LocationY = 0,
                         Orientation = OrientationDto.North,
-                        PhysicalHealth = new HealthDto { Maximum = BotPhysicalHealth, Current = BotPhysicalHealth },
-                        Stamina = new HealthDto { Maximum = BotStamina, Current = BotStamina },
-                        LastAttackLocation = new PositionDto { X = 0, Y = 0 }
+                        MaximumPhysicalHealth = BotPhysicalHealth,
+                        CurrentPhysicalHealth = BotPhysicalHealth,
+                        MaximumStamina = BotStamina,
+                        CurrentStamina = BotStamina,
+                        LastAttackLocationX = 0,
+                        LastAttackLocationY = 0
                     });
                     if (bot != null)
                     {

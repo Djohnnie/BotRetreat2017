@@ -89,14 +89,14 @@ namespace BotRetreat2017.Scripting
             _bots_6f4e9d2c3f474f2fa08d833e05cbba60 = bots ?? new List<Bot>();
             Width = arena.Width;
             Height = arena.Height;
-            Location = bot.Location;
+            Location = new Position { X = bot.LocationX, Y = bot.LocationY };
             _orientation_037c4fa95d8746db916121ade1c5f1d0 = bot.Orientation;
-            MaximumPhysicalHealth = bot.PhysicalHealth.Maximum;
-            _physicalHealth_3af8f9c91eb24bd0ab4389ed5241f78c = bot.PhysicalHealth.Current;
-            PhysicalHealthDrain = bot.PhysicalHealth.Drain;
-            MaximumStamina = bot.Stamina.Maximum;
-            _stamina_d5a8c937f540473f9d5f40269401f254 = bot.Stamina.Current;
-            StaminaDrain = bot.Stamina.Drain;
+            MaximumPhysicalHealth = bot.MaximumPhysicalHealth;
+            _physicalHealth_3af8f9c91eb24bd0ab4389ed5241f78c = bot.CurrentPhysicalHealth;
+            PhysicalHealthDrain = bot.PhysicalHealthDrain;
+            MaximumStamina = bot.MaximumStamina;
+            _stamina_d5a8c937f540473f9d5f40269401f254 = bot.CurrentStamina;
+            StaminaDrain = bot.StaminaDrain;
             _lastAction_8c1900d139b84019984c850387e441d6 = bot.LastAction;
             _currentAction_fd832498b5c4470bb4ac626ee3b3952d = LastAction.Idling;
             _lastAttackLocation = new Position { X = -1, Y = -1 };
@@ -170,6 +170,18 @@ namespace BotRetreat2017.Scripting
             }
         }
 
+        public void Teleport(Int16 x, Int16 y)
+        {
+            if (CurrentAction == LastAction.Idling && Stamina > 0 && !WillColide(x, y))
+            {
+                _stamina_d5a8c937f540473f9d5f40269401f254 -= 10;
+
+                Location.X = x;
+                Location.Y = y;
+                _currentAction_fd832498b5c4470bb4ac626ee3b3952d = LastAction.Teleport;
+            }
+        }
+
         public void MeleeAttack()
         {
             if (CurrentAction == LastAction.Idling)
@@ -180,7 +192,7 @@ namespace BotRetreat2017.Scripting
                 {
                     var bot = FindBot(botInMelee);
                     _lastAttackBotId = bot.Id;
-                    _lastAttackLocation = new Position { X = bot.Location.X, Y = bot.Location.Y };
+                    _lastAttackLocation = new Position { X = bot.LocationX, Y = bot.LocationY };
                     if (botInMelee.Orientation == Orientation)
                     {
                         DamageBot(bot, MELEE_BACKSTAB_DAMAGE);
@@ -205,7 +217,7 @@ namespace BotRetreat2017.Scripting
                 var rangeDistance = CalculateRangeDistance(x, y);
                 _lastAttackLocation = rangeDistance > MAXIMUM_RANGE ? CalculateRangeImpact(x, y) : new Position { X = x, Y = y };
                 var botInRange = FindBotInRange(_lastAttackLocation.X, _lastAttackLocation.Y);
-                if (botInRange != null)
+                if (botInRange != null && rangeDistance <= MAXIMUM_RANGE)
                 {
                     var bot = FindBot(botInRange);
                     _lastAttackBotId = bot.Id;
@@ -297,42 +309,42 @@ namespace BotRetreat2017.Scripting
         private IEnumerable<Bot> FindBotsInRange()
         {
             var botsInRange = new List<Bot>();
-            var northBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.Location.X == Location.X && x.Location.Y == Location.Y - 1);
+            var northBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.LocationX == Location.X && x.LocationY == Location.Y - 1);
             if (northBot != null)
             {
                 botsInRange.Add(northBot);
             }
-            var northEastBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.Location.X == Location.X + 1 && x.Location.Y == Location.Y - 1);
+            var northEastBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.LocationX == Location.X + 1 && x.LocationY == Location.Y - 1);
             if (northEastBot != null)
             {
                 botsInRange.Add(northEastBot);
             }
-            var eastBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.Location.X == Location.X + 1 && x.Location.Y == Location.Y);
+            var eastBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.LocationX == Location.X + 1 && x.LocationY == Location.Y);
             if (eastBot != null)
             {
                 botsInRange.Add(eastBot);
             }
-            var southEastBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.Location.X == Location.X + 1 && x.Location.Y == Location.Y + 1);
+            var southEastBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.LocationX == Location.X + 1 && x.LocationY == Location.Y + 1);
             if (southEastBot != null)
             {
                 botsInRange.Add(southEastBot);
             }
-            var southBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.Location.X == Location.X && x.Location.Y == Location.Y + 1);
+            var southBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.LocationX == Location.X && x.LocationY == Location.Y + 1);
             if (southBot != null)
             {
                 botsInRange.Add(southBot);
             }
-            var southWestBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.Location.X == Location.X - 1 && x.Location.Y == Location.Y + 1);
+            var southWestBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.LocationX == Location.X - 1 && x.LocationY == Location.Y + 1);
             if (southWestBot != null)
             {
                 botsInRange.Add(southWestBot);
             }
-            var westBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.Location.X == Location.X - 1 && x.Location.Y == Location.Y);
+            var westBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.LocationX == Location.X - 1 && x.LocationY == Location.Y);
             if (westBot != null)
             {
                 botsInRange.Add(westBot);
             }
-            var northWestBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.Location.X == Location.X - 1 && x.Location.Y == Location.Y - 1);
+            var northWestBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(x => x.LocationX == Location.X - 1 && x.LocationY == Location.Y - 1);
             if (northWestBot != null)
             {
                 botsInRange.Add(northWestBot);
@@ -365,22 +377,30 @@ namespace BotRetreat2017.Scripting
             {
                 case Orientation.North:
                     if (Location.Y == 0) colidingEdge = true;
-                    colidingBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(b => b.Location.X == Location.X && b.Location.Y == Location.Y - 1);
+                    colidingBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(b => b.LocationX == Location.X && b.LocationY == Location.Y - 1);
                     break;
                 case Orientation.East:
                     if (Location.X == Width - 1) colidingEdge = true;
-                    colidingBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(b => b.Location.X == Location.X + 1 && b.Location.Y == Location.Y);
+                    colidingBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(b => b.LocationX == Location.X + 1 && b.LocationY == Location.Y);
                     break;
                 case Orientation.South:
                     if (Location.Y == Height - 1) colidingEdge = true;
-                    colidingBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(b => b.Location.X == Location.X && b.Location.Y == Location.Y + 1);
+                    colidingBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(b => b.LocationX == Location.X && b.LocationY == Location.Y + 1);
                     break;
                 case Orientation.West:
                     if (Location.X == 0) colidingEdge = true;
-                    colidingBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(b => b.Location.X == Location.X - 1 && b.Location.Y == Location.Y);
+                    colidingBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(b => b.LocationX == Location.X - 1 && b.LocationY == Location.Y);
                     break;
             }
             return colidingBot != null || colidingEdge;
+        }
+
+        private Boolean WillColide(Int16 x, Int16 y)
+        {
+            Boolean outsideArena = x < 0 || x > Width - 1 || y < 0 || y > Height - 1;
+            Bot colidingBot = _bots_6f4e9d2c3f474f2fa08d833e05cbba60.SingleOrDefault(b => b.LocationX == x && b.LocationY == y);
+
+            return colidingBot != null || !outsideArena;
         }
 
         private void Turn(SByte turn)
@@ -390,14 +410,14 @@ namespace BotRetreat2017.Scripting
 
         private void DamageBot(Bot bot, Int16 damage)
         {
-            if (bot.PhysicalHealth.Current > 0)
+            if (bot.CurrentPhysicalHealth > 0)
             {
-                var newPhysicalHealth = (Int16)(bot.PhysicalHealth.Current - damage);
-                bot.PhysicalHealth.Current = newPhysicalHealth < 0 ? (Int16)0 : newPhysicalHealth;
-                if (bot.PhysicalHealth.Current == 0)
+                var newPhysicalHealth = (Int16)(bot.CurrentPhysicalHealth - damage);
+                bot.CurrentPhysicalHealth = newPhysicalHealth < 0 ? (Int16)0 : newPhysicalHealth;
+                if (bot.CurrentPhysicalHealth == 0)
                 {
                     bot.LastAction = LastAction.Died;
-                    bot.Statistics.TimeOfDeath = DateTime.UtcNow;
+                    bot.TimeOfDeath = DateTime.UtcNow;
                     _kills_fd832498b5c4470bb4ac626ee3b3952d++;
                 }
             }

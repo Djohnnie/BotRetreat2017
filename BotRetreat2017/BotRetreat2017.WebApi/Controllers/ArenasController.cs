@@ -54,17 +54,5 @@ namespace BotRetreat2017.WebApi.Controllers
         {
             return Ok(l => l.CreateArena(arena));
         }
-
-        [HttpPut, Route(RouteConstants.PUT_ARENA)]
-        public Task<IActionResult> Put([FromBody]ArenaDto arena)
-        {
-            return Ok(l => l.EditArena(arena));
-        }
-
-        [HttpDelete, Route(RouteConstants.DELETE_ARENA)]
-        public Task<IActionResult> Delete(Guid id)
-        {
-            return Ok(l => l.RemoveArena(id));
-        }
     }
 }

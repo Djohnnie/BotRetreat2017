@@ -31,7 +31,7 @@ namespace BotRetreat2017.Business
             var existingBot = await _dbContext.Bots.SingleOrDefaultAsync(x => x.Name == bot.Name);
             if (existingBot != null) { throw new BusinessException($"Bot with name {bot.Name} already exists!"); }
             var botEntity = _botMapper.Map(bot);
-            botEntity.Statistics = new Statistics { TimeOfBirth = DateTime.UtcNow };
+            botEntity.TimeOfBirth = DateTime.UtcNow;
             _dbContext.Bots.Add(botEntity);
             await _dbContext.SaveChangesAsync();
             return _botMapper.Map(

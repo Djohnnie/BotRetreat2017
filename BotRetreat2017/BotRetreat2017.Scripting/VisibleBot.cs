@@ -15,7 +15,7 @@ namespace BotRetreat2017.Scripting
         public VisibleBot(Bot bot)
         {
             Orientation = bot.Orientation;
-            Location = bot.Location;
+            Location = new Position { X = bot.LocationX, Y = bot.LocationY };
             Name = bot.Name;
         }
 

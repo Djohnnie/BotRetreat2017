@@ -10,6 +10,7 @@ using BotRetreat2017.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
+using System.Runtime.CompilerServices;
 
 namespace BotRetreat2017.Scripting
 {
@@ -24,8 +25,9 @@ namespace BotRetreat2017.Scripting
                 var systemCore = typeof(Enumerable).Assembly;
                 var botRetreatModel = typeof(Position).Assembly;
                 var botRetreatScripting = typeof(IBot).Assembly;
-                var scriptOptions = ScriptOptions.Default.AddReferences(mscorlib, systemCore, botRetreatModel, botRetreatScripting);
-                scriptOptions = scriptOptions.WithImports("System", "System.Linq", "System.Collections.Generic", "BotRetreat2017.Model", "BotRetreat2017.Scripting.Interfaces");
+                var dynamic = typeof(DynamicAttribute).Assembly;
+                var scriptOptions = ScriptOptions.Default.AddReferences(mscorlib, systemCore, botRetreatModel, botRetreatScripting, dynamic);
+                scriptOptions = scriptOptions.WithImports("System", "System.Linq", "System.Collections.Generic", "BotRetreat2017.Model", "BotRetreat2017.Scripting.Interfaces", "System.Runtime.CompilerServices");
                 var botScript = CSharpScript.Create(decodedScript, scriptOptions, typeof(ScriptGlobals));
                 botScript.WithOptions(botScript.Options.AddReferences(mscorlib, systemCore));
                 return botScript;
@@ -35,6 +37,12 @@ namespace BotRetreat2017.Scripting
         public static async Task<ScriptValidationDto> ValidateScript(String script)
         {
             var scriptValidation = new ScriptValidationDto { Script = script, Messages = new List<ScriptValidationMessageDto>() };
+
+            if (script.Contains("CSharpCompilation"))
+            {
+                scriptValidation.Messages.Add(new ScriptValidationMessageDto { Message = "Script blocked!" });
+                return scriptValidation;
+            }
 
             var botScript = await PrepareScript(script);
 
@@ -57,27 +65,36 @@ namespace BotRetreat2017.Scripting
                     {
                         Id = Guid.NewGuid(),
                         Name = "Bot",
-                        PhysicalHealth = new Health { Maximum = 100, Current = 100 },
-                        Stamina = new Health { Maximum = 100, Current = 100 },
-                        Location = new Position { X = 1, Y = 1 },
+                        MaximumPhysicalHealth = 100,
+                        CurrentPhysicalHealth = 100,
+                        MaximumStamina = 100,
+                        CurrentStamina = 100,
+                        LocationX = 1,
+                        LocationY = 1,
                         Orientation = Orientation.South
                     };
                     var friendBot = new Bot
                     {
                         Id = Guid.NewGuid(),
                         Name = "Friend",
-                        PhysicalHealth = new Health { Maximum = 100, Current = 100 },
-                        Stamina = new Health { Maximum = 100, Current = 100 },
-                        Location = new Position { X = 1, Y = 3 },
+                        MaximumPhysicalHealth = 100,
+                        CurrentPhysicalHealth = 100,
+                        MaximumStamina = 100,
+                        CurrentStamina = 100,
+                        LocationX = 1,
+                        LocationY = 3,
                         Orientation = Orientation.North
                     };
                     var enemyBot = new Bot
                     {
                         Id = Guid.NewGuid(),
                         Name = "Enemy",
-                        PhysicalHealth = new Health { Maximum = 100, Current = 100 },
-                        Stamina = new Health { Maximum = 100, Current = 100 },
-                        Location = new Position { X = 1, Y = 5 },
+                        MaximumPhysicalHealth = 100,
+                        CurrentPhysicalHealth = 100,
+                        MaximumStamina = 100,
+                        CurrentStamina = 100,
+                        LocationX = 1,
+                        LocationY = 5,
                         Orientation = Orientation.North
                     };
                     var deployment = new Deployment

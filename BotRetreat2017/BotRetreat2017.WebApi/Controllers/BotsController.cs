@@ -24,17 +24,5 @@ namespace BotRetreat2017.WebApi.Controllers
         {
             return Ok(l => l.CreateBot(bot));
         }
-
-        [HttpPut, Route(RouteConstants.PUT_BOT)]
-        public Task<IActionResult> Put([FromBody]BotDto bot)
-        {
-            return Ok(l => l.EditBot(bot));
-        }
-
-        [HttpDelete, Route(RouteConstants.DELETE_BOT)]
-        public Task<IActionResult> Delete(Guid id)
-        {
-            return Ok(l => l.RemoveBot(id));
-        }
     }
 }

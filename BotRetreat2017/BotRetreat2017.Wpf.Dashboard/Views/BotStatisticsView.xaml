@@ -106,11 +106,6 @@
                             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding PhysicalHealth, Converter={StaticResource HealthToStringConverter}}" Margin="6" />
                             <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="LightGray" />
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Mental health: " Margin="3" FontWeight="Bold" VerticalAlignment="Center" />
-                            <ProgressBar Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="3,3,3,4" Maximum="{Binding MentalHealth.Maximum}" Value="{Binding MentalHealth.Current}" Foreground="{Binding MentalHealth, Converter={StaticResource HealthToBrushConverter}}" />
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding MentalHealth, Converter={StaticResource HealthToStringConverter}}" Margin="6" />
-                            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="LightGray" />
-
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="Stamina: " Margin="3" FontWeight="Bold" VerticalAlignment="Center" />
                             <ProgressBar Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="3,3,3,4" Maximum="{Binding Stamina.Maximum}" Value="{Binding Stamina.Current}" Foreground="{Binding Stamina, Converter={StaticResource HealthToBrushConverter}}" />
                             <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Stamina, Converter={StaticResource HealthToStringConverter}}" Margin="6" />

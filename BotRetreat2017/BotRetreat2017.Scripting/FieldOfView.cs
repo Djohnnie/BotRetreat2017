@@ -29,10 +29,10 @@ namespace BotRetreat2017.Scripting
                     minimumX = 0;
                     maximumX = arena.Width - 1;
                     minimumY = 0;
-                    maximumY = bot.Location.Y;
+                    maximumY = bot.LocationY;
                     break;
                 case Orientation.East:
-                    minimumX = bot.Location.X;
+                    minimumX = bot.LocationX;
                     maximumX = arena.Width - 1;
                     minimumY = 0;
                     maximumY = arena.Height - 1;
@@ -40,12 +40,12 @@ namespace BotRetreat2017.Scripting
                 case Orientation.South:
                     minimumX = 0;
                     maximumX = arena.Width - 1;
-                    minimumY = bot.Location.Y;
+                    minimumY = bot.LocationY;
                     maximumY = arena.Height - 1;
                     break;
                 case Orientation.West:
                     minimumX = 0;
-                    maximumX = bot.Location.X;
+                    maximumX = bot.LocationX;
                     minimumY = 0;
                     maximumY = arena.Height - 1;
                     break;
@@ -54,8 +54,8 @@ namespace BotRetreat2017.Scripting
             {
                 if (otherBot.Id != bot.Id)
                 {
-                    if (otherBot.Location.X >= minimumX && otherBot.Location.X <= maximumX &&
-                        otherBot.Location.Y >= minimumY && otherBot.Location.Y <= maximumY)
+                    if (otherBot.LocationX >= minimumX && otherBot.LocationX <= maximumX &&
+                        otherBot.LocationY >= minimumY && otherBot.LocationY <= maximumY)
                     {
                         Bots.Add(new VisibleBot(otherBot));
                         var botTeamName = otherBot.Deployments.Select(x => x.Team.Name).Distinct().Single();

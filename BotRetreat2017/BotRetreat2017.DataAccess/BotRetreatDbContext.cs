@@ -16,10 +16,7 @@ namespace BotRetreat2017.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
-                @"Server=tcp:botretreat.database.windows.net,1433;Initial Catalog=botretreat;Persist Security Info=False;User ID=br2017;Password=B0tR3tr3at;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"); µ@"Server=tcp:botretreat.database.windows.net,1433;Initial Catalog=botretreat;Persist Security Info=False;User ID=br2017;Password=B0tR3tr3at;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-
-            //@"Server=.\SQLDEV;Database=BotRetreat2017;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("");
         }
 
         public void InitializeDatabase()
@@ -43,11 +40,6 @@ namespace BotRetreat2017.DataAccess
             modelBuilder.Entity<Bot>().HasKey(x => x.Id).ForSqlServerIsClustered(clustered: false);
             modelBuilder.Entity<Bot>().HasIndex(x => x.SysId).IsUnique().ForSqlServerIsClustered();
             modelBuilder.Entity<Bot>().Property(x => x.SysId).ValueGeneratedOnAdd();
-            modelBuilder.Entity<Bot>().OwnsOne(x => x.PhysicalHealth);
-            modelBuilder.Entity<Bot>().OwnsOne(x => x.Stamina);
-            modelBuilder.Entity<Bot>().OwnsOne(x => x.Location);
-            modelBuilder.Entity<Bot>().OwnsOne(x => x.LastAttackLocation);
-            modelBuilder.Entity<Bot>().OwnsOne(x => x.Statistics);
 
             modelBuilder.Entity<Deployment>().ToTable("DEPLOYMENTS");
             modelBuilder.Entity<Deployment>().HasKey(x => x.Id).ForSqlServerIsClustered(clustered: false);

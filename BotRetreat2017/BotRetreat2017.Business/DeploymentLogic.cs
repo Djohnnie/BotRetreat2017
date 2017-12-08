@@ -31,15 +31,20 @@ namespace BotRetreat2017.Business
             var bot = await _dbContext.Bots.SingleOrDefaultAsync(x => x.Name == deployment.BotName);
             if (bot == null) { throw new BusinessException($"Bot '{deployment.BotName}' does not exist!"); }
 
-            if (bot.PhysicalHealth.Maximum < 0 || bot.Stamina.Maximum < 0)
+            if (bot.MaximumPhysicalHealth < 0 || bot.MaximumStamina < 0)
             {
                 throw new BusinessException($"Number of assigned bot points is not valid!");
             }
 
-            var assignedPoints = bot.Stamina.Maximum + bot.PhysicalHealth.Maximum;
+            var assignedPoints = bot.MaximumStamina + bot.MaximumPhysicalHealth;
             if (assignedPoints > arena.MaximumPoints)
             {
                 throw new BusinessException($"Number of assigned bot points ({assignedPoints}) is larger than maximum allowed ({arena.MaximumPoints})!");
+            }
+
+            if (bot.Script.Contains("CSharpCompilation"))
+            {
+                throw new BusinessException($"Script blocked!");
             }
 
             var lastDeployment = await _dbContext.Deployments
@@ -58,16 +63,16 @@ namespace BotRetreat2017.Business
 
             var existingBots = await _dbContext.Deployments.Where(x => x.Arena.Id == arena.Id)
                     .Select(x => x.Bot)
-                    .Where(x => x.PhysicalHealth.Current > 0)
-                    .Select(b => new { b.Location.X, b.Location.Y }).ToListAsync();
+                    .Where(x => x.CurrentPhysicalHealth > 0)
+                    .Select(b => new { b.LocationX, b.LocationY }).ToListAsync();
             var randomGenerator = new Random();
             var locationFound = false;
             while (!locationFound)
             {
-                bot.Location.X = (Int16)randomGenerator.Next(0, arena.Width);
-                bot.Location.Y = (Int16)randomGenerator.Next(0, arena.Height);
+                bot.LocationX = (Int16)randomGenerator.Next(0, arena.Width);
+                bot.LocationY = (Int16)randomGenerator.Next(0, arena.Height);
                 bot.Orientation = (Orientation)randomGenerator.Next(0, 4);
-                if (!existingBots.Any(l => l.X == bot.Location.X && l.Y == bot.Location.Y))
+                if (!existingBots.Any(l => l.LocationX == bot.LocationX && l.LocationY == bot.LocationY))
                 {
                     locationFound = true;
                 }

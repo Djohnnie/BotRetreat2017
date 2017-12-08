@@ -11,17 +11,29 @@ namespace BotRetreat2017.Contracts
 
         public String Name { get; set; }
 
-        public PositionDto Location { get; set; }
+        public Int16 LocationX { get; set; }
+
+        public Int16 LocationY { get; set; }
 
         public OrientationDto Orientation { get; set; }
 
-        public HealthDto PhysicalHealth { get; set; }
+        public Int16 MaximumPhysicalHealth { get; set; }
 
-        public HealthDto Stamina { get; set; }
+        public Int16 CurrentPhysicalHealth { get; set; }
+
+        public Int16 PhysicalHealthDrain { get; set; }
+
+        public Int16 MaximumStamina { get; set; }
+
+        public Int16 CurrentStamina { get; set; }
+
+        public Int16 StaminaDrain { get; set; }
 
         public LastActionDto LastAction { get; set; }
 
-        public PositionDto LastAttackLocation { get; set; }
+        public Int16 LastAttackLocationX { get; set; }
+
+        public Int16 LastAttackLocationY { get; set; }
 
         public String Script { get; set; }
     }
