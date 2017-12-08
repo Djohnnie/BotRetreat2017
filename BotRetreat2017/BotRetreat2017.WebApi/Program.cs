@@ -13,6 +13,7 @@ namespace BotRetreat2017.WebApi
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseKestrel()
                 .Build();
     }
 }

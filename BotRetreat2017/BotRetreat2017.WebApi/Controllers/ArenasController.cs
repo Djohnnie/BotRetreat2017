@@ -13,6 +13,12 @@ namespace BotRetreat2017.WebApi.Controllers
     {
         public ArenasController(IArenaLogic arenaLogic) : base(arenaLogic) { }
 
+        [HttpGet, Route(RouteConstants.TOP_TEAMS)]
+        public Task<IActionResult> GetTopTeams(String arenaName)
+        {
+            return Ok(l => l.GetTopTeams(arenaName));
+        }
+
         [HttpGet, Route(RouteConstants.GET_ARENAS)]
         public Task<IActionResult> GetAllArenas()
         {

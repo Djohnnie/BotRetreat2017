@@ -28,40 +28,40 @@ namespace BotRetreat2017.Scripting.Extensions
             bot.Memory = coreGlobals.Memory.Serialize();
         }
 
-        //public static IEnumerable<BotStat> GetBotStats(this IEnumerable<Bot> bots)
-        //{
-        //    return bots.Select(bot => new BotStat
-        //    {
-        //        BotId = bot.Id,
-        //        PhysicalHealth = bot.PhysicalHealth.Current,
-        //        Stamina = bot.Stamina.Current
-        //    }).ToList();
-        //}
-
-        //public static void UpdateStatDrains(this IEnumerable<Bot> bots, IEnumerable<BotStat> botStats)
-        //{
-        //    bots.ForEach(bot =>
-        //    {
-        //        var botStat = botStats.Single(s => s.BotId == bot.Id);
-        //        bot.PhysicalHealth.Drain = (Int16)(botStat.PhysicalHealth - bot.PhysicalHealth.Current);
-        //        bot.Stamina.Drain = (Int16)(botStat.Stamina - bot.Stamina.Current);
-        //    });
-        //}
-
-        public static void UpdateLastAttackLocation(this IEnumerable<Bot> bots)
+        public static List<BotStat> GetBotStats(this List<Bot> bots)
         {
-            var botList = bots.ToList();
-            botList.ForEach(bot =>
+            return bots.Select(bot => new BotStat
+            {
+                BotId = bot.Id,
+                PhysicalHealth = bot.PhysicalHealth.Current,
+                Stamina = bot.Stamina.Current
+            }).ToList();
+        }
+
+        public static void UpdateStatDrains(this List<Bot> bots, List<BotStat> botStats)
+        {
+            foreach (var bot in bots)
+            {
+                var botStat = botStats.Single(s => s.BotId == bot.Id);
+                bot.PhysicalHealth.Drain = (Int16)(botStat.PhysicalHealth - bot.PhysicalHealth.Current);
+                bot.Stamina.Drain = (Int16)(botStat.Stamina - bot.Stamina.Current);
+            }
+        }
+
+        public static void UpdateLastAttackLocation(this List<Bot> bots)
+        {
+            foreach (var bot in bots)
             {
                 if (bot.LastAttackBotId.HasValue)
                 {
-                    var attackedBot = botList.SingleOrDefault(x => x.Id == bot.LastAttackBotId.Value);
+                    var attackedBot = bots.SingleOrDefault(x => x.Id == bot.LastAttackBotId.Value);
                     if (attackedBot != null)
                     {
-                        bot.LastAttackLocation = new Position { X = attackedBot.Location.X, Y = attackedBot.Location.Y };
+                        bot.LastAttackLocation.X = attackedBot.Location.X;
+                        bot.LastAttackLocation.Y = attackedBot.Location.Y;
                     }
                 }
-            });
+            };
         }
     }
 }

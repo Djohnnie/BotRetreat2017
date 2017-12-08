@@ -8,8 +8,10 @@ using BotRetreat2017.Mappers.Interfaces;
 using BotRetreat2017.Model;
 using BotRetreat2017.Contracts;
 using BotRetreat2017.DataAccess;
+using BotRetreat2017.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Crypt = BCrypt.Net.BCrypt;
+using BotRetreat2017.Business.Exceptions;
 
 namespace BotRetreat2017.Business
 {
@@ -22,6 +24,23 @@ namespace BotRetreat2017.Business
         {
             _arenaMapper = arenaMapper;
             _arenaListMapper = arenaListMapper;
+        }
+
+        public async Task<List<TopTeamDto>> GetTopTeams(String arenaName)
+        {
+            var arena = await _dbContext.Arenas.SingleOrDefaultAsync(x => x.Name.ToUpper() == arenaName.ToUpper());
+            if (arena == null) throw new BusinessException("Specified arena does not exist!");
+            var teams = await _dbContext.Teams.Include(x => x.Deployments).ThenInclude(x => x.Bot).ThenInclude(x => x.Statistics).ToListAsync();
+
+            var topTeams = teams.Select(x => new TopTeamDto
+            {
+                TeamName = x.Name,
+                NumberOfKills = x.Deployments.Where(d => d.ArenaId == arena.Id).Select(s => s.Bot).Sum(b => b.Statistics.Kills),
+                AverageBotLife = TimeSpan.FromMilliseconds(x.Deployments.Where(d => d.ArenaId == arena.Id).Select(s => s.Bot).Where(s => s.Statistics.TimeOfDeath.HasValue)
+                        .Select(s => (s.Statistics.TimeOfDeath.Value - s.Statistics.TimeOfBirth).TotalMilliseconds)
+                        .AverageOrDefault(0)).ToString()
+            }).ToList();
+            return topTeams.OrderByDescending(x => x.NumberOfKills).Take(3).ToList();
         }
 
         public async Task<List<ArenaDto>> GetAllArenas()

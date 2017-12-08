@@ -9,6 +9,7 @@ namespace BotRetreat2017.Routes
         public const String GET_HISTORY_BY_ARENA = "arena/{arenaName}/history/{fromDateTime?}/{untilDateTime?}";
         public const String GET_HISTORY_BY_BOT = "bot/{botName}/history/{fromDateTime?}/{untilDateTime?}";
 
+        public const String TOP_TEAMS = "arenas/{arenaName}/teams/top";
         public const String GET_ARENAS = "arenas";
         public const String GET_ARENAS_LIST = "arenas/list";
         public const String GET_AVAILABLE_ARENAS = "arenas/available";

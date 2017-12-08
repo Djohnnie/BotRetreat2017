@@ -1,0 +1,12 @@
+﻿FROM microsoft/dotnet
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the app
+COPY bin/Release/publish /app
+
+EXPOSE 5000
+
+# Start the app
+ENTRYPOINT ["dotnet", "BotRetreat2017.WebApi.dll"]

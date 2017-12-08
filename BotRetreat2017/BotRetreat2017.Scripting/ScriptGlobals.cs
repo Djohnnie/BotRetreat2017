@@ -202,8 +202,9 @@ namespace BotRetreat2017.Scripting
             if (CurrentAction == LastAction.Idling)
             {
                 _currentAction_fd832498b5c4470bb4ac626ee3b3952d = LastAction.RangedAttack;
-                _lastAttackLocation = new Position { X = x, Y = y };
-                var botInRange = FindBotInRange(x, y);
+                var rangeDistance = CalculateRangeDistance(x, y);
+                _lastAttackLocation = rangeDistance > MAXIMUM_RANGE ? CalculateRangeImpact(x, y) : new Position { X = x, Y = y };
+                var botInRange = FindBotInRange(_lastAttackLocation.X, _lastAttackLocation.Y);
                 if (botInRange != null)
                 {
                     var bot = FindBot(botInRange);
@@ -342,6 +343,18 @@ namespace BotRetreat2017.Scripting
         private IBot FindBotInRange(Int16 x, Int16 y)
         {
             return Vision.Bots.SingleOrDefault(b => b.Location.X == x && b.Location.Y == y);
+        }
+
+        private Decimal CalculateRangeDistance(Int16 x, Int16 y)
+        {
+            var distanceOnX = Math.Abs(Location.X - x);
+            var distanceOnY = Math.Abs(Location.Y - y);
+            return (Decimal)Math.Sqrt(distanceOnX * distanceOnX + distanceOnY * distanceOnY);
+        }
+
+        private Position CalculateRangeImpact(Int16 x, Int16 y)
+        {
+            return new Position { X = x, Y = y };
         }
 
         private Boolean WillColide()

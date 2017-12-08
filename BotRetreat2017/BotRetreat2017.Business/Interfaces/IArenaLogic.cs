@@ -7,6 +7,8 @@ namespace BotRetreat2017.Business.Interfaces
 {
     public interface IArenaLogic : ILogic
     {
+        Task<List<TopTeamDto>> GetTopTeams(String arenaName);
+
         Task<List<ArenaDto>> GetAllArenas();
 
         Task<List<ArenaListDto>> GetArenasList();

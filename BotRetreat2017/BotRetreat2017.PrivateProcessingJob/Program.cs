@@ -7,7 +7,7 @@ namespace BotRetreat2017.PrivateProcessingJob
 {
     class Program
     {
-        private const Int32 DELAY_MS = 5000;
+        private const Int32 DELAY_MS = 2000;
 
         static void Main(string[] args)
         {
