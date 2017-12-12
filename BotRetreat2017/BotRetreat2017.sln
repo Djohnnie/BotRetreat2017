@@ -43,7 +43,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotRetreat2017.Utilities", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotRetreat2017.Wpf.ScriptEditor", "BotRetreat2017.Wpf.ScriptEditor\BotRetreat2017.Wpf.ScriptEditor.csproj", "{8C478EAD-D859-4735-96C6-B59EEECF4EB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotRetreat2017.Routes", "BotRetreat2017.Routes\BotRetreat2017.Routes.csproj", "{9069E011-D179-4E7A-9645-65569BE330AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotRetreat2017.Routes", "BotRetreat2017.Routes\BotRetreat2017.Routes.csproj", "{9069E011-D179-4E7A-9645-65569BE330AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9. Tests", "9. Tests", "{5489678A-D49A-4EE5-AB99-99A2642CB5DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotRetreat2017.Scripting.Tests", "BotRetreat2017.Scripting.Tests\BotRetreat2017.Scripting.Tests.csproj", "{FBB7E922-FB21-418E-B60C-093A28A4184D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -119,6 +123,10 @@ Global
 		{9069E011-D179-4E7A-9645-65569BE330AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9069E011-D179-4E7A-9645-65569BE330AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9069E011-D179-4E7A-9645-65569BE330AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBB7E922-FB21-418E-B60C-093A28A4184D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBB7E922-FB21-418E-B60C-093A28A4184D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBB7E922-FB21-418E-B60C-093A28A4184D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBB7E922-FB21-418E-B60C-093A28A4184D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,6 +149,7 @@ Global
 		{45995979-CD34-439F-BB60-D436747FA301} = {6A4F73FB-869C-4DAC-8624-60F136C69190}
 		{8C478EAD-D859-4735-96C6-B59EEECF4EB3} = {D327E089-9F87-4636-B232-2D9F3352ED26}
 		{9069E011-D179-4E7A-9645-65569BE330AD} = {6A4F73FB-869C-4DAC-8624-60F136C69190}
+		{FBB7E922-FB21-418E-B60C-093A28A4184D} = {5489678A-D49A-4EE5-AB99-99A2642CB5DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10257B74-E322-4A7F-AAD6-133ABD9F15C5}

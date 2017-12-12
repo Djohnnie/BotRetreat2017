@@ -11,9 +11,11 @@ namespace BotRetreat2017.WebApi
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseKestrel()
-                .Build();
-    }
+            WebHost.CreateDefaultBuilder(args )
+                .UseUrls( "http://*:5000" )
+                .UseKestrel( )
+                .UseIISIntegration( )
+                .UseStartup<Startup>( )
+                .Build( );
+  }
 }

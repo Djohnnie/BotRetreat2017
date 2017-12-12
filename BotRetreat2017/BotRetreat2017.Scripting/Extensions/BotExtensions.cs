@@ -10,8 +10,8 @@ namespace BotRetreat2017.Scripting.Extensions
     {
         public static void UpdateBot(this Bot bot, ScriptGlobals coreGlobals)
         {
-            bot.LocationX = coreGlobals.Location.X;
-            bot.LocationY = coreGlobals.Location.Y;
+            bot.LocationX = coreGlobals.LocationX;
+            bot.LocationY = coreGlobals.LocationY;
             bot.Orientation = coreGlobals.Orientation;
             bot.LastAction = coreGlobals.CurrentAction;
             bot.CurrentPhysicalHealth = coreGlobals.PhysicalHealth;

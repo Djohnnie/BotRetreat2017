@@ -18,12 +18,17 @@ namespace BotRetreat2017.Scripting.Interfaces
         /// <summary>
         /// Your current position in units from the left and units from the top.
         /// </summary>
-        Position Location { get; }
+        Int16 LocationX { get; }
 
-        /// <summary>
-        /// The maximum physical health.
-        /// </summary>
-        Int16 MaximumPhysicalHealth { get; }
+    /// <summary>
+    /// Your current position in units from the left and units from the top.
+    /// </summary>
+    Int16 LocationY { get; }
+
+    /// <summary>
+    /// The maximum physical health.
+    /// </summary>
+    Int16 MaximumPhysicalHealth { get; }
 
         /// <summary>
         /// The current remaining physical health.

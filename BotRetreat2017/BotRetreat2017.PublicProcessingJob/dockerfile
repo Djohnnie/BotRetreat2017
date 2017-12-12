@@ -7,4 +7,4 @@ WORKDIR /app
 COPY bin/Release/publish /app
 
 # Start the app
-ENTRYPOINT ["dotnet", "BotRetreat2017.PrivateProcessingJob.dll"]
+ENTRYPOINT ["dotnet", "BotRetreat2017.PublicProcessingJob.dll"]
